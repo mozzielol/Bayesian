@@ -22,11 +22,9 @@ if __name__=='__main__':
 	X_train,y_train,X_test,y_test = load_mnist_drift(split=True)
 	infer = cnn_model('info_gain')
 	infer.fit(X_train,y_train)
-	infer.evaluate(X_test,y_test)
 
 	para = cnn_model('nor')
 	para.fit(X_train,y_train)
-	para.evaluate(X_test,y_test)
 	
 	for name in ['info_gain','nor']:
 		test(name)
