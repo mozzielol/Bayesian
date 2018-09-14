@@ -8,4 +8,4 @@ I've changed the weight_loss to :
 			res.append(K.sum(K.square(cur_grad[i] - pre_grad[i])))
 		return sum(res)/len(res)
     
-The confusion matrix is 
+The confusion matrix is ![confusion matrix](https://github.com/mozzielol/Bayesian/blob/master/confusion%20matrix.png)
