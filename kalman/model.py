@@ -63,11 +63,12 @@ class op_batch_callback(Callback):
 
 	def on_epoch_begin(self,epoch,logs={}):
 		self.epoch = epoch
-		self.pre_g = get_weight_grad(self.model,self.X_train[0*128:(0+1)*128],self.y_train[0*128:(0+1)*128])
+
 		
 
 	def on_batch_begin(self,batch,logs={}):
 		self.pre_w = get_weights(self.model)
+		self.pre_g = get_weight_grad(self.model,self.X_train[0*128:(0+1)*128],self.y_train[0*128:(0+1)*128])
 
 	def on_batch_end(self,batch,logs={}):
 		
@@ -84,9 +85,12 @@ class op_batch_callback(Callback):
 		
 		self.model.set_weights(new_w)
 		
+		#error update
+		'''
 		new_g = []
 		for kal,g in zip(Kalman_gain,self.pre_g):
 			new_g.append((1- kal) * g )
+		'''
 		'''
 		print('bach -- ', batch)
 		print('pre g :', self.pre_g[0][0][0][0][0])
@@ -96,4 +100,4 @@ class op_batch_callback(Callback):
 		print('new w :', new_w[0][0][0][0][0:3])
 		print('new g :', new_g[0][0][0][0][0])
 		'''
-		self.pre_g = new_g
+		#self.pre_g = new_g
