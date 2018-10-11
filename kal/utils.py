@@ -6,8 +6,6 @@ TRAIN_NUM = 5000
 TEST_NUM = 2000
 
 
-def permute_mnist(mnist):
-    perm_inds = range()
 
 
 def get_weights(model):
