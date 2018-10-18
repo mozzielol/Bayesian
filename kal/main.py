@@ -28,7 +28,7 @@ def acc_plot(name,acc,data_num):
 		plt.vlines((i+1),0,1,color='r',linestyles='dashed')
 	plt.legend(loc='upper right')
 	plt.subplots_adjust(wspace=1,hspace=1)
-	plt.savefig('./images/test.png'.format(name))
+	plt.savefig('./images/permuted.png'.format(name))
 
 
 #Load the drift data
@@ -91,20 +91,31 @@ def train(name):
 	model.plot('res',name)
 	
 	return acc_test_d1,acc_test_d2,acc_test_d3
-	
+
+def save_acc(name,d):
+	import json
+	for i in range(3):
+		path = './logs/permuted/acc{}/{}.txt'.format(str(i+1),name)
+		with open(path,'w') as f:
+			json.dump(d[i],f)
 
 if __name__ == '__main__':
 	#Train the model. 
-	print('--'*10,'kal','--'*10)
-	kal_d1,kal_d2,kal_d3 = train('kal')
-	print('--'*10,'kal_pre','--'*10)
-	kal_pre_d1, kal_pre_d2, kal_pre_d3 = train('kal_pre')
-	print('--'*10,'kal_cur','--'*10)
-	kal_cur_d1, kal_cur_d2, kal_cur_d3 = train('kal_cur')
+	#print('--'*10,'kal_cur','--'*10)
+	#kal_cur_d1, kal_cur_d2, kal_cur_d3 = train('kal_cur')
+	#save_acc('kal_cur',[kal_cur_d1, kal_cur_d2, kal_cur_d3])
 	print('--'*10,'nor','--'*10)
 	nor_d1,nor_d2,nor_d3 = train('nor')
+	save_acc('nor',[nor_d1,nor_d2,nor_d3])
+	print('--'*10,'kal','--'*10)
+	kal_d1,kal_d2,kal_d3 = train('kal')
+	save_acc('kal',[kal_d1,kal_d2,kal_d3])
+	print('--'*10,'kal_pre','--'*10)
+	kal_pre_d1, kal_pre_d2, kal_pre_d3 = train('kal_pre')
+	save_acc('kal_pre',[kal_pre_d1, kal_pre_d2, kal_pre_d3])
 
 	#Plot the accuracy on test data.
+	
 	acc_plot('nor',nor_d1,1)
 	acc_plot('nor',nor_d2,2)
 	acc_plot('nor',nor_d3,3)
@@ -118,4 +129,3 @@ if __name__ == '__main__':
 	acc_plot('kal_cur',kal_cur_d2,2)
 	acc_plot('kal_cur',kal_cur_d3,3)
 
-	
